@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">MyStudyApplication</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <string name="txt_search_books">Search Books</string>
+    <string name="txt_favorite_books">Favorite Books</string>
+    <string name="txt_settings">Settings</string>
+    <string name="book_info">Book Info</string>
+</resources>

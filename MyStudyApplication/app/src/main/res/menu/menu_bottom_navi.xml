@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/fragment_search"
+        android:title="@string/txt_search_books"
+        android:icon="@drawable/ic_round_search_24"/>
+
+    <item android:id="@+id/fragment_favorite"
+        android:title="@string/txt_favorite_books"
+        android:icon="@drawable/ic_round_favorite_24"/>
+
+    <item android:id="@+id/fragment_settings"
+        android:title="@string/txt_settings"
+        android:icon="@drawable/ic_round_settings_24"/>
+
+</menu>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/graph_nav_booksearch"
+    app:startDestination="@id/fragment_search">
+
+    <fragment
+        android:id="@+id/fragment_search"
+        android:name="com.example.mystudyapplication.ui.fragment.SearchFragment"
+        android:label="@string/txt_search_books"
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_fragment_search_to_fragment_web_view_bookFragment"
+            app:destination="@id/fragment_web_view_bookkFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_favorite"
+        android:name="com.example.mystudyapplication.ui.fragment.FavoriteFragment"
+        android:label="@string/txt_favorite_books"
+        tools:layout="@layout/fragment_favorite" >
+        <action
+            android:id="@+id/action_fragment_favorite_to_fragment_web_view_bookkFragment"
+            app:destination="@id/fragment_web_view_bookkFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_settings"
+        android:name="com.example.mystudyapplication.ui.fragment.SettingsFragment"
+        android:label="@string/txt_settings"
+        tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/fragment_web_view_bookkFragment"
+        android:name="com.example.mystudyapplication.ui.fragment.WebViewBookFragment"
+        android:label="@string/book_info"
+        tools:layout="@layout/fragment_web_view_book" >
+        <argument
+            android:name="book"
+            app:argType="com.example.mystudyapplication.data.model.Book" />
+    </fragment>
+</navigation>
