@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.secrets.gradle)
     alias(libs.plugins.safe.args)
+    alias(libs.plugins.ksp)
     id("kotlin-parcelize")
 }
 
@@ -68,6 +69,18 @@ dependencies {
     // navigation
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
+
+    // room
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    annotationProcessor(libs.room.compiler)
+    ksp(libs.room.compiler)
+
+    // serialization
+    implementation(libs.serialization.json)
+
+    // recyclerview
+    implementation(libs.recyclerview)
 
     // test
     testImplementation(libs.junit)

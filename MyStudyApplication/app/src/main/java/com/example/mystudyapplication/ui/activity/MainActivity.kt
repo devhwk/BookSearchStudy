@@ -10,6 +10,7 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.mystudyapplication.R
+import com.example.mystudyapplication.data.db.BookSearchDatabase
 import com.example.mystudyapplication.databinding.ActivityMainBinding
 import com.example.mystudyapplication.repository.BookSearchRepoImpl
 import com.example.mystudyapplication.ui.fragment.FavoriteFragment
@@ -32,7 +33,8 @@ class MainActivity
     }
 
     private fun initBookSearchViewModel() {
-        val bookSearchRepo = BookSearchRepoImpl()
+        val database = BookSearchDatabase.getInstance(this)
+        val bookSearchRepo = BookSearchRepoImpl(database)
         val factory = BookSearchViewModel.Factory(bookSearchRepo)
         bookSearchViewModel = ViewModelProvider(this, factory)[BookSearchViewModel::class.java]
     }
