@@ -73,6 +73,7 @@ dependencies {
     // room
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
+    implementation(libs.room.paging)
     annotationProcessor(libs.room.compiler)
     ksp(libs.room.compiler)
 
@@ -81,6 +82,12 @@ dependencies {
 
     // recyclerview
     implementation(libs.recyclerview)
+
+    // dataStore
+    implementation(libs.datastore)
+
+    //paging
+    implementation(libs.paging)
 
     // test
     testImplementation(libs.junit)

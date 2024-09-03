@@ -1,13 +1,9 @@
 package com.example.mystudyapplication.ui.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.webkit.WebViewClient
 import androidx.navigation.fragment.navArgs
-import com.example.mystudyapplication.R
 import com.example.mystudyapplication.databinding.FragmentWebViewBookBinding
 import com.example.mystudyapplication.ui.activity.MainActivity
 import com.example.mystudyapplication.ui.viewmodel.BookSearchViewModel

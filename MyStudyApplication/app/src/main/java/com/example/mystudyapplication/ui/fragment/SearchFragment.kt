@@ -9,14 +9,15 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mystudyapplication.databinding.FragmentSearchBinding
 import com.example.mystudyapplication.ui.activity.MainActivity
-import com.example.mystudyapplication.ui.adapter.BookSearchAdapter
+import com.example.mystudyapplication.ui.adapter.BookSearchPagingAdapter
 import com.example.mystudyapplication.ui.viewmodel.BookSearchViewModel
 import com.example.mystudyapplication.util.Constants
+import com.example.mystudyapplication.util.collectLatestStateFlow
 
 class SearchFragment
     : BaseFragment<FragmentSearchBinding>({ FragmentSearchBinding.inflate(it)}) {
     private lateinit var bookSearchViewModel: BookSearchViewModel
-    private lateinit var bookSearchAdapter: BookSearchAdapter
+    private lateinit var bookSearchAdapter: BookSearchPagingAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -29,7 +30,7 @@ class SearchFragment
     }
 
     private fun setRecyclerView() {
-        bookSearchAdapter = BookSearchAdapter()
+        bookSearchAdapter = BookSearchPagingAdapter()
         binding.rvSearchResult.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
@@ -53,7 +54,7 @@ class SearchFragment
                 text?.let {
                     val query = it.toString().trim()
                     if (query.isNotEmpty()) {
-                        bookSearchViewModel.searchBooks(query)
+                        bookSearchViewModel.searchBookPaging(query)
                     }
                 }
             }
@@ -63,9 +64,8 @@ class SearchFragment
     }
 
     private fun setViewModelObserve() {
-        bookSearchViewModel.searchResult.observe(viewLifecycleOwner) { response ->
-            val books = response.books
-            bookSearchAdapter.submitList(books)
+        collectLatestStateFlow(bookSearchViewModel.searchPagingResult) {
+            bookSearchAdapter.submitData(it)
         }
     }
 }

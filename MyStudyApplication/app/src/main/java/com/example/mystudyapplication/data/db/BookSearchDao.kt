@@ -1,5 +1,6 @@
 package com.example.mystudyapplication.data.db
 
+import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -17,5 +18,5 @@ interface BookSearchDao {
     suspend fun deleteBook(book: Book)
 
     @Query("SELECT * from books")
-    fun getFavoriteBooks(): Flow<List<Book>>
+    fun getFavoritePagingBooks(): PagingSource<Int, Book>
 }

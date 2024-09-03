@@ -1,7 +1,8 @@
 package com.example.mystudyapplication.ui.activity
 
+import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -13,10 +14,8 @@ import com.example.mystudyapplication.R
 import com.example.mystudyapplication.data.db.BookSearchDatabase
 import com.example.mystudyapplication.databinding.ActivityMainBinding
 import com.example.mystudyapplication.repository.BookSearchRepoImpl
-import com.example.mystudyapplication.ui.fragment.FavoriteFragment
-import com.example.mystudyapplication.ui.fragment.SearchFragment
-import com.example.mystudyapplication.ui.fragment.SettingsFragment
 import com.example.mystudyapplication.ui.viewmodel.BookSearchViewModel
+import com.example.mystudyapplication.util.Constants
 
 class MainActivity
     : BaseActivity<ActivityMainBinding>({ActivityMainBinding.inflate(it)}) {
@@ -26,6 +25,8 @@ class MainActivity
     private lateinit var appBarConfiguration: AppBarConfiguration
     private val topLevelFragment = setOf(R.id.fragment_search, R.id.fragment_favorite, R.id.fragment_settings)
 
+    private val Context.dataStore by preferencesDataStore(Constants.DATASTORE_NAME)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initBookSearchViewModel()
@@ -34,7 +35,7 @@ class MainActivity
 
     private fun initBookSearchViewModel() {
         val database = BookSearchDatabase.getInstance(this)
-        val bookSearchRepo = BookSearchRepoImpl(database)
+        val bookSearchRepo = BookSearchRepoImpl(database, dataStore)
         val factory = BookSearchViewModel.Factory(bookSearchRepo)
         bookSearchViewModel = ViewModelProvider(this, factory)[BookSearchViewModel::class.java]
     }
