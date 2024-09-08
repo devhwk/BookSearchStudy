@@ -2,13 +2,14 @@ package com.example.mystudyapplication.repository
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.example.mystudyapplication.data.api.RetrofitInstance
+import com.example.mystudyapplication.data.api.BookSearchApi
 import com.example.mystudyapplication.data.model.Book
 import com.example.mystudyapplication.util.Constants
 import retrofit2.HttpException
 import java.io.IOException
 
 class BookSearchPagingSource(
+    private val api: BookSearchApi,
     private val query: String,
     private val sort : String,
     private val target: String
@@ -23,7 +24,7 @@ class BookSearchPagingSource(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Book> {
         return try {
             val pageNumber = params.key ?: STARTING_PAGE_INDEX
-            val response = RetrofitInstance.api.searchBooks(query, sort, pageNumber, params.loadSize, target)
+            val response = api.searchBooks(query, sort, pageNumber, params.loadSize, target)
             val endOfPaginationReached = response.body()?.meta?.isEnd!!
 
             val data = response.body()?.books!!

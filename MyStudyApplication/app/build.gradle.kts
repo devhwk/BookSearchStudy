@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.secrets.gradle)
     alias(libs.plugins.safe.args)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt)
     id("kotlin-parcelize")
 }
 
@@ -50,6 +51,7 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
+    implementation(libs.androidx.fragment)
     implementation(libs.androidx.constraintlayout)
 
     // connection
@@ -88,6 +90,16 @@ dependencies {
 
     //paging
     implementation(libs.paging)
+
+    // workManager
+    implementation(libs.workmanager)
+
+    //hilt
+    implementation(libs.hilt)
+    ksp(libs.hilt.compiler)
+    implementation(libs.hilt.ex.work)
+    ksp(libs.hilt.ex.compiler)
+
 
     // test
     testImplementation(libs.junit)

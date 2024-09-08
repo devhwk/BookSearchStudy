@@ -1,9 +1,6 @@
 package com.example.mystudyapplication.ui.activity
 
-import android.content.Context
 import android.os.Bundle
-import androidx.datastore.preferences.preferencesDataStore
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -11,37 +8,24 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.mystudyapplication.R
-import com.example.mystudyapplication.data.db.BookSearchDatabase
 import com.example.mystudyapplication.databinding.ActivityMainBinding
-import com.example.mystudyapplication.repository.BookSearchRepoImpl
-import com.example.mystudyapplication.ui.viewmodel.BookSearchViewModel
-import com.example.mystudyapplication.util.Constants
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity
     : BaseActivity<ActivityMainBinding>({ActivityMainBinding.inflate(it)}) {
 
-    lateinit var bookSearchViewModel: BookSearchViewModel
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
     private val topLevelFragment = setOf(R.id.fragment_search, R.id.fragment_favorite, R.id.fragment_settings)
 
-    private val Context.dataStore by preferencesDataStore(Constants.DATASTORE_NAME)
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        initBookSearchViewModel()
         setNavigation()
     }
 
-    private fun initBookSearchViewModel() {
-        val database = BookSearchDatabase.getInstance(this)
-        val bookSearchRepo = BookSearchRepoImpl(database, dataStore)
-        val factory = BookSearchViewModel.Factory(bookSearchRepo)
-        bookSearchViewModel = ViewModelProvider(this, factory)[BookSearchViewModel::class.java]
-    }
-
     private fun setNavigation() {
-        val host = supportFragmentManager.findFragmentById(R.id.host_nav_booksearch) as NavHostFragment ?: return
+        val host = supportFragmentManager.findFragmentById(R.id.host_nav_booksearch) as NavHostFragment
         navController = host.navController
         binding.mainBottomNavi.setupWithNavController(navController)
 

@@ -3,30 +3,35 @@ package com.example.mystudyapplication.ui.fragment
 import android.os.Bundle
 import android.text.Editable
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mystudyapplication.databinding.FragmentSearchBinding
-import com.example.mystudyapplication.ui.activity.MainActivity
+import com.example.mystudyapplication.ui.adapter.BookLoadStateAdapter
 import com.example.mystudyapplication.ui.adapter.BookSearchPagingAdapter
-import com.example.mystudyapplication.ui.viewmodel.BookSearchViewModel
+import com.example.mystudyapplication.ui.viewmodel.SearchViewModel
 import com.example.mystudyapplication.util.Constants
 import com.example.mystudyapplication.util.collectLatestStateFlow
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SearchFragment
     : BaseFragment<FragmentSearchBinding>({ FragmentSearchBinding.inflate(it)}) {
-    private lateinit var bookSearchViewModel: BookSearchViewModel
     private lateinit var bookSearchAdapter: BookSearchPagingAdapter
+    private val searchViewModel by viewModels<SearchViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        bookSearchViewModel = (activity as MainActivity).bookSearchViewModel
-
         setRecyclerView()
         searchBooks()
         setViewModelObserve()
+        setLoadState()
     }
 
     private fun setRecyclerView() {
@@ -36,6 +41,10 @@ class SearchFragment
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
             adapter = bookSearchAdapter
+
+            adapter = bookSearchAdapter.withLoadStateFooter(
+                footer =  BookLoadStateAdapter(bookSearchAdapter::retry)
+            )
         }
 
         bookSearchAdapter.setOnItemClickListener {
@@ -54,7 +63,7 @@ class SearchFragment
                 text?.let {
                     val query = it.toString().trim()
                     if (query.isNotEmpty()) {
-                        bookSearchViewModel.searchBookPaging(query)
+                        searchViewModel.searchBookPaging(query)
                     }
                 }
             }
@@ -64,8 +73,22 @@ class SearchFragment
     }
 
     private fun setViewModelObserve() {
-        collectLatestStateFlow(bookSearchViewModel.searchPagingResult) {
+        collectLatestStateFlow(searchViewModel.searchPagingResult) {
             bookSearchAdapter.submitData(it)
+        }
+    }
+
+    private fun setLoadState() {
+        bookSearchAdapter.addLoadStateListener { combinedState ->
+            val loadState = combinedState.source
+            val isListEmpty = bookSearchAdapter.itemCount < 1
+                    && loadState.refresh is LoadState.NotLoading
+                    && loadState.append.endOfPaginationReached
+
+            binding.tvResultEmpty.isVisible = isListEmpty
+            binding.rvSearchResult.isVisible = !isListEmpty
+
+            binding.progress.isVisible = loadState.refresh is LoadState.Loading
         }
     }
 }
