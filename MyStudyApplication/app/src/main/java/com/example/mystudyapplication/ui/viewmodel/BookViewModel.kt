@@ -6,6 +6,7 @@ import com.example.mystudyapplication.data.model.Book
 import com.example.mystudyapplication.repository.BookSearchRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -16,4 +17,7 @@ class BookViewModel @Inject constructor(
     fun addFavoriteBook(book: Book) = viewModelScope.launch(Dispatchers.IO) {
         bookSearchRepo.insertBook(book)
     }
+
+    // for test
+    val favoriteBooks: Flow<List<Book>> = bookSearchRepo.getFavoriteBooks()
 }

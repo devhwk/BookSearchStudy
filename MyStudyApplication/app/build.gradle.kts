@@ -3,9 +3,9 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.secrets.gradle)
     alias(libs.plugins.safe.args)
-    alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
     id("kotlin-parcelize")
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -19,7 +19,8 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+//        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.example.mystudyapplication.HiltTestRunner"
     }
 
     buildTypes {
@@ -42,6 +43,13 @@ android {
     buildFeatures {
         buildConfig = true
         viewBinding = true
+    }
+
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+        }
+        animationsDisabled = true
     }
 }
 
@@ -100,9 +108,23 @@ dependencies {
     implementation(libs.hilt.ex.work)
     ksp(libs.hilt.ex.compiler)
 
-
     // test
     testImplementation(libs.junit)
+    testImplementation(libs.truth)
+    testImplementation(libs.runner)
+    testImplementation(libs.androidx.junit)
+    testImplementation(libs.androidx.test.core)
+    testImplementation(libs.robo)
+    testImplementation(libs.test.coroutine)
+
+    androidTestImplementation(libs.truth)
+    androidTestImplementation(libs.runner)
     androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.test.core)
     androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(libs.androidx.espresso.contrib)
+    androidTestImplementation(libs.test.coroutine)
+    androidTestImplementation(libs.hilt.test)
+    androidTestImplementation(libs.hamcrest)
+    kspAndroidTest(libs.hilt.compiler)
 }

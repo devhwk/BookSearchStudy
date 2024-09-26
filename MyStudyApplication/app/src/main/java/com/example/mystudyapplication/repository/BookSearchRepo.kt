@@ -22,4 +22,7 @@ interface BookSearchRepo {
     // workManager : cache manage
     suspend fun saveCacheDeleteMode(mode: Boolean)
     suspend fun getCacheDeleteMode(): Flow<Boolean>
+
+    // for test
+    fun getFavoriteBooks(): Flow<List<Book>>
 }

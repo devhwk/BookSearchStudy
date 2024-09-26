@@ -1,10 +1,7 @@
 [versions]
 agp = "8.5.1"
-kotlin = "1.9.0"
+kotlin = "1.9.20"
 coreKtx = "1.10.1"
-junit = "4.13.2"
-junitVersion = "1.1.5"
-espressoCore = "3.5.1"
 appcompat = "1.6.1"
 material = "1.10.0"
 activity = "1.9.2"
@@ -31,11 +28,22 @@ serialization = "1.6.10"
 hilt = "2.49"
 hiltExtension = "1.2.0"
 
+junit = "4.13.2"
+junitVersion = "1.1.5"
+espressoCore = "3.5.1"
+androidXTestCore = "1.4.0"
+truth = "1.4.0"
+runner = "1.4.0"
+robo = "4.13"
+testCoroutine = "1.6.2"
+hamcrest = "2.2"
+
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+androidx-espresso-contrib = { group = "androidx.test.espresso", name = "espresso-contrib", version.ref = "espressoCore" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
@@ -59,9 +67,16 @@ datastore = { group = "androidx.datastore", name = "datastore-preferences", vers
 paging = { group = "androidx.paging", name = "paging-runtime-ktx", version.ref = "paging" }
 workmanager = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "workmanger" }
 hilt = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
+hilt-test = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
 hilt-ex-work = { group = "androidx.hilt", name = "hilt-work", version.ref = "hiltExtension" }
 hilt-ex-compiler = { group = "androidx.hilt", name = "hilt-compiler", version.ref = "hiltExtension" }
+androidx-test-core = { group = "androidx.test", name = "core", version.ref = "androidXTestCore" }
+truth = { group = "androidx.test.ext", name = "truth", version.ref = "truth" }
+runner = { group = "androidx.test", name = "runner", version.ref = "runner" }
+robo = { group = "org.robolectric", name = "robolectric", version.ref = "robo" }
+test-coroutine = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "testCoroutine" }
+hamcrest = { group = "org.hamcrest", name = "hamcrest", version.ref = "hamcrest" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

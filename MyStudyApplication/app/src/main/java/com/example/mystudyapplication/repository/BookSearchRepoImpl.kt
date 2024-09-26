@@ -104,4 +104,9 @@ class BookSearchRepoImpl @Inject constructor(
                 prefs[PreferencesKeys.CACHE_DELETE_MODE] ?: false
             }
     }
+
+    // for test
+    override fun getFavoriteBooks(): Flow<List<Book>> {
+        return db.bookSearchDao().getFavoriteBooks()
+    }
 }

@@ -19,4 +19,8 @@ interface BookSearchDao {
 
     @Query("SELECT * from books")
     fun getFavoritePagingBooks(): PagingSource<Int, Book>
+
+    // for test
+    @Query("SELECT * FROM books")
+    fun getFavoriteBooks(): Flow<List<Book>>
 }
